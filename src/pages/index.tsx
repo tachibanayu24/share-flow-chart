@@ -1,46 +1,30 @@
-// import html2canvas from "html2canvas";
+import html2canvas from "html2canvas";
 import type { NextPage } from "next";
 import Head from "next/head";
 // import Image from "next/image";
-// import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import { OnLoadParams } from "react-flow-renderer";
 import { Flow } from "@/components/Flow";
 import { ModeSwitch } from "@/components/ModeSwitch";
 import { useClipboard } from "@/hooks/useClipboard";
-import { useFlowInstance } from "@/hooks/useFlowInstance";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { usePreCacheCanvas } from "@/hooks/usePreCacheCanvas";
 import { useScreenSize } from "@/hooks/useScreenSize";
 
 const Home: NextPage = () => {
   const size = useScreenSize();
   const { handleCopy, hasCopied } = useClipboard();
-  const { flowInstance, setFlowInstance } = useFlowInstance();
+  const { canvas: defaultCanvas, handleReSaveCanvas } = usePreCacheCanvas();
   const { storedValue: isDarkMode, setValue: setIsDarkMode } = useLocalStorage("isDarkMode", true);
-  const { storedValue: flowCanvas, setValue: setFlowCanvas } = useLocalStorage("flowCanvas");
+  const { storedValue: canvas, setValue: setCanvas } = useLocalStorage("canvas", defaultCanvas);
 
-  console.log("isDarkMode", isDarkMode);
-  console.log("flowCanvas", flowCanvas);
-
-  // useEffect(() => {
-  //   if (flowInstance) {
-  //     flowInstance.fitView();
-
-  //     html2canvas(document.querySelector(".react-flow")!).then((canvas) => {
-  //       setFlowCanvas(canvas);
-  //     });
-  //   }
-  // }, [flowInstance, setFlowCanvas]);
-
-  const handleLoad = (flowInstance: OnLoadParams) => {
-    console.log("flow loaded:", flowInstance);
-    setFlowInstance(flowInstance);
-
-    if (flowInstance) flowInstance.fitView();
-  };
+  // useEffect(() => {}, []);
 
   const handleDownload = () => {
-    const targetImgUri = flowCanvas.toDataURL("img/png");
+    handleReSaveCanvas();
+
+    const targetImgUri = canvas.toDataURL("img/png");
     const downloadLink = document.createElement("a");
 
     downloadLink.href = targetImgUri;
@@ -90,10 +74,8 @@ const Home: NextPage = () => {
         </header>
 
         <main className="grow">
-          <div className="flex flex-col items-center pt-8">
-            {size.width && (
-              <Flow isDarkMode={isDarkMode} onLoad={handleLoad} screenWidth={size.width} />
-            )}
+          <div className="flex flex-col items-center pt-24">
+            {size.width && <Flow isDarkMode={isDarkMode} screenWidth={size.width} />}
 
             <div className="flex gap-5 items-start mt-10">
               <div>
@@ -101,7 +83,7 @@ const Home: NextPage = () => {
                   className="py-1 px-3 font-bold bg-black/20 hover:bg-black/40 dark:bg-white/20 dark:hover:bg-white/40 rounded-md shadow-lg"
                   onClick={() => handleCopy(location.href)}
                 >
-                  🔗 Copy & Share
+                  🔗 Copy share link
                 </button>
                 {hasCopied && (
                   <p className="p-1 text-sm text-center text-green-400 animate-fade">Copied!</p>
@@ -112,7 +94,7 @@ const Home: NextPage = () => {
                 className="py-1 px-3 font-bold bg-black/20 hover:bg-black/40 dark:bg-white/20 dark:hover:bg-white/40 rounded-md shadow-lg"
                 onClick={() => handleDownload()}
               >
-                📤 Fit view & Export
+                📤 Export as image
               </button>
             </div>
           </div>

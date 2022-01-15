@@ -30,19 +30,16 @@ const elements = [
 
 type Props = {
   isDarkMode: boolean;
-
   screenWidth: number;
-} & Pick<ComponentProps<typeof FlowOrigin>, "onLoad">;
+};
 
-export const Flow: VFC<Props> = ({ screenWidth, isDarkMode, onLoad }) => {
+export const Flow: VFC<Props> = ({ screenWidth, isDarkMode }) => {
   const isPc = screenWidth > 640;
-  const [isShowMiniMap, setIsShowMiniMap] = useState(true);
-  const [isShowControls, setIsControls] = useState(true);
+  const [isShowMiniMap, setIsShowMiniMap] = useState(isPc);
+  const [isShowControls, setIsControls] = useState(isPc);
 
-  console.log(isShowControls, isShowMiniMap);
-
-  const OGP_RATIO = 1.91;
   // TODO:
+  // const OGP_RATIO = 1.91;
   const size = [`h-[500px]`, `w-[955px]`, `h-[320px]`, `w-[95%]`];
 
   let style;
@@ -70,7 +67,7 @@ export const Flow: VFC<Props> = ({ screenWidth, isDarkMode, onLoad }) => {
       <div
         className={`${style} ${isDarkMode ? "bg-slate-600" : "bg-slate-200"} rounded-md shadow-lg`}
       >
-        <FlowOrigin elements={elements} onLoad={onLoad}>
+        <FlowOrigin elements={elements}>
           {isShowMiniMap && <MiniMap />}
           {isShowControls && <Controls />}
           <Background color="#aaa" gap={16} />

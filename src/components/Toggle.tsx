@@ -8,9 +8,9 @@ type Props = {
 
 export const Toggle: VFC<Props> = ({ label, onToggle, isChecked }) => (
   <div className="flex justify-center items-center">
-    <label className="flex items-center cursor-pointer" onClick={onToggle}>
+    <label className="flex items-center cursor-pointer">
       <div className="relative">
-        <input type="checkbox" className="sr-only" checked={isChecked} />
+        <input type="checkbox" className="sr-only" checked={isChecked} onChange={onToggle} />
 
         <div className="block w-12 h-6 bg-gray-600 rounded-full"></div>
 

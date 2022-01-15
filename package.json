@@ -1,5 +1,5 @@
 {
-  "name": "share-flow-chart",
+  "name": "flowchart-dialog-editor-online",
   "private": true,
   "scripts": {
     "dev": "next dev",
