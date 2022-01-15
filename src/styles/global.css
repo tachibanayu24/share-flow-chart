@@ -20,6 +20,11 @@ table {
   border-spacing: 0;
 }
 
+input:checked ~ .dot {
+  transform: translateX(140%);
+  background-color: #48bb78;
+}
+
 /* ubuntu-300 - latin_cyrillic */
 @font-face {
   font-family: "Ubuntu";

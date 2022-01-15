@@ -1,5 +1,7 @@
-import { ComponentProps, CSSProperties, VFC } from "react";
-import { default as FlowOrigin } from "react-flow-renderer";
+import { useState, ComponentProps, CSSProperties, VFC } from "react";
+import { default as FlowOrigin, Controls, MiniMap, Background } from "react-flow-renderer";
+
+import { Toggle } from "@/components/Toggle";
 
 const elements = [
   {
@@ -26,28 +28,54 @@ const elements = [
   { id: "e2-3", source: "2", target: "3" },
 ];
 
-type Props = { isDarkMode: boolean; screenWidth: number } & Pick<
-  ComponentProps<typeof FlowOrigin>,
-  "onLoad"
->;
+type Props = {
+  isDarkMode: boolean;
+
+  screenWidth: number;
+} & Pick<ComponentProps<typeof FlowOrigin>, "onLoad">;
 
 export const Flow: VFC<Props> = ({ screenWidth, isDarkMode, onLoad }) => {
+  const isPc = screenWidth > 640;
+  const [isShowMiniMap, setIsShowMiniMap] = useState(true);
+  const [isShowControls, setIsControls] = useState(true);
+
+  console.log(isShowControls, isShowMiniMap);
+
   const OGP_RATIO = 1.91;
   // TODO:
-  const size = [`h-[320px]`, `w-[95%]`, `h-[500px]`, `w-[955px]`];
+  const size = [`h-[500px]`, `w-[955px]`, `h-[320px]`, `w-[95%]`];
 
   let style;
-  if (screenWidth < 640) {
+  if (isPc) {
     style = size.slice(0, 2).join(" ");
   } else {
     style = size.slice(2, 4).join(" ");
   }
 
   return (
-    <div
-      className={`${style} ${isDarkMode ? "bg-slate-600" : "bg-slate-200"} rounded-md shadow-lg`}
-    >
-      <FlowOrigin elements={elements} onLoad={onLoad} />
-    </div>
+    <>
+      <div className="flex gap-8 mb-8">
+        <Toggle
+          label="Control Buttons"
+          onToggle={() => setIsControls((prev) => !prev)}
+          isChecked={isShowControls}
+        />
+        <Toggle
+          label="MiniMap"
+          onToggle={() => setIsShowMiniMap((prev) => !prev)}
+          isChecked={isShowMiniMap}
+        />
+      </div>
+
+      <div
+        className={`${style} ${isDarkMode ? "bg-slate-600" : "bg-slate-200"} rounded-md shadow-lg`}
+      >
+        <FlowOrigin elements={elements} onLoad={onLoad}>
+          {isShowMiniMap && <MiniMap />}
+          {isShowControls && <Controls />}
+          <Background color="#aaa" gap={16} />
+        </FlowOrigin>
+      </div>
+    </>
   );
 };
