@@ -1,8 +1,9 @@
-import html2canvas from "html2canvas";
+// import html2canvas from "html2canvas";
 import type { NextPage } from "next";
 import Head from "next/head";
-import Image from "next/image";
-import { useEffect, useState } from "react";
+// import Image from "next/image";
+// import { useEffect, useState } from "react";
+
 import { OnLoadParams } from "react-flow-renderer";
 import { Flow } from "@/components/Flow";
 import { ModeSwitch } from "@/components/ModeSwitch";
@@ -55,21 +56,25 @@ const Home: NextPage = () => {
 
   return (
     <div className={isDarkMode ? "dark" : undefined}>
+      <Head>
+        <title>Free Online Sharable Flowchart & Dialog Editor | @tachibanayu24</title>
+        <link
+          rel="icon"
+          href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text x=%2250%%22 y=%2250%%22 style=%22dominant-baseline:central;text-anchor:middle;font-size:90px;%22>📈</text></svg>"
+        />
+        <link
+          href="http://fonts.googleapis.com/css?family=Ubuntu&subset=cyrillic,latin"
+          rel="stylesheet"
+          type="text/css"
+        />
+
+        <meta name="description" content="This is content" />
+      </Head>
+
       <div className="flex flex-col min-h-screen antialiased hover:subpixel-antialiased text-gray-800 dark:text-gray-200 bg-gray-100 dark:bg-gray-800">
-        <Head>
-          <title>📈 Share Flow Chart</title>
-          <link
-            href="http://fonts.googleapis.com/css?family=Ubuntu&subset=cyrillic,latin"
-            rel="stylesheet"
-            type="text/css"
-          />
-
-          <meta name="description" content="This is content" />
-        </Head>
-
         <header>
           <div className="flex relative justify-center items-center p-4 h-20">
-            <h1 className="m-0 text-xl font-bold text-center lg:text-4xl">📈 Share Flow Chart</h1>
+            <h1 className="m-0 text-xl font-bold text-center lg:text-4xl">📈 Flowchart Edit</h1>
             <div className="absolute right-8">
               <ModeSwitch isDarkMode={isDarkMode} onToggle={handleClickSwitch} />
             </div>
