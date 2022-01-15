@@ -1,28 +1,27 @@
-import html2canvas from "html2canvas";
+// import html2canvas from "html2canvas";
 import type { NextPage } from "next";
 import Head from "next/head";
 // import Image from "next/image";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 
-import { OnLoadParams } from "react-flow-renderer";
 import { Flow } from "@/components/Flow";
 import { ModeSwitch } from "@/components/ModeSwitch";
 import { useClipboard } from "@/hooks/useClipboard";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
-import { usePreCacheCanvas } from "@/hooks/usePreCacheCanvas";
+// import { usePreCacheCanvas } from "@/hooks/usePreCacheCanvas";
 import { useScreenSize } from "@/hooks/useScreenSize";
 
 const Home: NextPage = () => {
   const size = useScreenSize();
   const { handleCopy, hasCopied } = useClipboard();
-  const { canvas: defaultCanvas, handleReSaveCanvas } = usePreCacheCanvas();
+  // const { canvas: defaultCanvas, handleReSaveCanvas } = usePreCacheCanvas();
   const { storedValue: isDarkMode, setValue: setIsDarkMode } = useLocalStorage("isDarkMode", true);
-  const { storedValue: canvas, setValue: setCanvas } = useLocalStorage("canvas", defaultCanvas);
+  const { storedValue: canvas, setValue: setCanvas } = useLocalStorage("canvas");
 
   // useEffect(() => {}, []);
 
   const handleDownload = () => {
-    handleReSaveCanvas();
+    // handleReSaveCanvas();
 
     const targetImgUri = canvas.toDataURL("img/png");
     const downloadLink = document.createElement("a");

@@ -2,31 +2,8 @@ import { useState, ComponentProps, CSSProperties, VFC } from "react";
 import { default as FlowOrigin, Controls, MiniMap, Background } from "react-flow-renderer";
 
 import { Toggle } from "@/components/Toggle";
-
-const elements = [
-  {
-    id: "1",
-    type: "input", // input node
-    data: { label: "Input Node" },
-    position: { x: 250, y: 25 },
-  },
-  // default node
-  {
-    id: "2",
-    // you can also pass a React component as a label
-    data: { label: <div>Default Node</div> },
-    position: { x: 100, y: 125 },
-  },
-  {
-    id: "3",
-    type: "output", // output node
-    data: { label: "Output Node" },
-    position: { x: 250, y: 250 },
-  },
-  // animated edge
-  { id: "e1-2", source: "1", target: "2", animated: true },
-  { id: "e2-3", source: "2", target: "3" },
-];
+import { useFlow } from "@/hooks/useFlow";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 type Props = {
   isDarkMode: boolean;
@@ -34,6 +11,11 @@ type Props = {
 };
 
 export const Flow: VFC<Props> = ({ screenWidth, isDarkMode }) => {
+  const { elements } = useFlow();
+  const { storedValue: storedElements, setValue: setElement } = useLocalStorage(
+    "elements",
+    elements
+  );
   const isPc = screenWidth > 640;
   const [isShowMiniMap, setIsShowMiniMap] = useState(isPc);
   const [isShowControls, setIsControls] = useState(isPc);
@@ -68,6 +50,7 @@ export const Flow: VFC<Props> = ({ screenWidth, isDarkMode }) => {
         className={`${style} ${isDarkMode ? "bg-slate-600" : "bg-slate-200"} rounded-md shadow-lg`}
       >
         <FlowOrigin elements={elements}>
+          {/* TODO: inject style */}
           {isShowMiniMap && <MiniMap />}
           {isShowControls && <Controls />}
           <Background color="#aaa" gap={16} />
