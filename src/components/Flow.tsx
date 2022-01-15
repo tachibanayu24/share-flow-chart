@@ -1,6 +1,6 @@
-import { CSSProperties, VFC } from "react";
+import { ComponentProps, CSSProperties, VFC } from "react";
 
-import ReactFlow from "react-flow-renderer";
+import { default as FlowOrigin } from "react-flow-renderer";
 
 const OGP_RATIO = 1.91;
 const elements = [
@@ -28,18 +28,21 @@ const elements = [
   { id: "e2-3", source: "2", target: "3" },
 ];
 
-type Props = { isDarkMode: boolean };
+type Props = { isDarkMode: boolean } & Pick<ComponentProps<typeof FlowOrigin>, "onLoad">;
 
-export const Flow: VFC<Props> = ({ isDarkMode }) => {
+export const Flow: VFC<Props> = ({ isDarkMode, onLoad }) => {
   return (
-    <div style={getStyle({ isDarkMode })}>
-      <ReactFlow elements={elements} />
+    <div style={getStyle(isDarkMode)}>
+      <FlowOrigin elements={elements} onLoad={onLoad} />
     </div>
   );
 };
 
-const getStyle = (isDarkMode: Pick<Props, "isDarkMode">): CSSProperties => ({
-  height: 500,
-  width: 500 * OGP_RATIO,
-  background: isDarkMode ? "lightslategray" : "red",
-});
+const getStyle = (isDarkMode: keyof Pick<Props, "isDarkMode">): CSSProperties => {
+  console.log(isDarkMode);
+  return {
+    height: 500,
+    width: 500 * OGP_RATIO,
+    background: isDarkMode ? "darkslategray" : "lightslategray",
+  };
+};
