@@ -19,15 +19,20 @@ const Home: NextPage = () => {
           <meta name="description" content="This is content" />
         </Head>
 
-        <main className="grow">
-          <body>
-            <div className=" p-4">
-              <h1 className="text-4xl font-bold text-center">📈 Share Flow Chart</h1>
+        <header>
+          <div className="flex relative justify-center items-center p-4 h-20">
+            <h1 className="m-0 text-4xl font-bold text-center">📈 Share Flow Chart</h1>
+            <div className="absolute right-8">
+              <ModeSwitch isDarkMode onToggle={console.log} />
             </div>
-            {/* <div className="flex justify-center pt-8"> */}
-            <Flow isDarkMode />
-            {/* </div> */}
-          </body>
+          </div>
+        </header>
+
+        <main className="grow">
+          {/* <div className="flex justify-center pt-8"> */}
+          <Flow isDarkMode />
+          {/* </div> */}
+          <button onClick={handleClick}>🔗 Copy & Share</button>
         </main>
 
         <footer>

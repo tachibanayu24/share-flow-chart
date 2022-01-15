@@ -31,8 +31,6 @@ const elements = [
 type Props = { isDarkMode: boolean };
 
 export const Flow: VFC<Props> = ({ isDarkMode }) => {
-  console.log(isDarkMode);
-
   return (
     <div style={getStyle({ isDarkMode })}>
       <ReactFlow elements={elements} />
