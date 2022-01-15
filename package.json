@@ -1,5 +1,5 @@
 {
-  "name": "flow-ogp",
+  "name": "share-flow-chart",
   "private": true,
   "scripts": {
     "dev": "next dev",
