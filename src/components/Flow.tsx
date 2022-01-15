@@ -1,8 +1,6 @@
 import { ComponentProps, CSSProperties, VFC } from "react";
-
 import { default as FlowOrigin } from "react-flow-renderer";
 
-const OGP_RATIO = 1.91;
 const elements = [
   {
     id: "1",
@@ -28,29 +26,23 @@ const elements = [
   { id: "e2-3", source: "2", target: "3" },
 ];
 
-type Props = { isDarkMode: boolean } & Pick<ComponentProps<typeof FlowOrigin>, "onLoad">;
+type Props = { isDarkMode: boolean; screenWidth: number } & Pick<
+  ComponentProps<typeof FlowOrigin>,
+  "onLoad"
+>;
 
-export const Flow: VFC<Props> = ({ isDarkMode, onLoad }) => {
+export const Flow: VFC<Props> = ({ screenWidth, isDarkMode, onLoad }) => {
+  const OGP_RATIO = 1.91;
+  const size = [
+    `h-[${screenWidth / OGP_RATIO}px]`,
+    `w-full`,
+    `lg:h-[500px]`,
+    `lg:w-[${500 * OGP_RATIO}px]`,
+  ].join(" ");
+
   return (
-    <div
-      // style={getStyle(isDarkMode)}
-      className={`h-[500px] w-[${500 * OGP_RATIO}px] ${
-        isDarkMode ? "bg-slate-600" : "bg-slate-200"
-      } rounded-md shadow-lg`}
-    >
+    <div className={`${size} ${isDarkMode ? "bg-slate-600" : "bg-slate-200"} rounded-md shadow-lg`}>
       <FlowOrigin elements={elements} onLoad={onLoad} />
     </div>
   );
-};
-
-const getStyle = (
-  isDarkMode: Pick<Props, "isDarkMode">[keyof Pick<Props, "isDarkMode">]
-): CSSProperties => {
-  console.log(isDarkMode);
-  return {
-    height: 500,
-    width: 500 * OGP_RATIO,
-    borderRadius: "8px",
-    background: isDarkMode ? "darkslategray" : "lightslategray",
-  };
 };

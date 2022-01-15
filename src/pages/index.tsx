@@ -2,19 +2,34 @@ import html2canvas from "html2canvas";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { OnLoadParams } from "react-flow-renderer";
 import { Flow } from "@/components/Flow";
 import { ModeSwitch } from "@/components/ModeSwitch";
 import { useClipboard } from "@/hooks/useClipboard";
+import { useFlowInstance } from "@/hooks/useFlowInstance";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { useScreenSize } from "@/hooks/useScreenSize";
 
 const Home: NextPage = () => {
+  const size = useScreenSize();
   const { handleCopy, hasCopied } = useClipboard();
-  const { storedValue: isDarkMode, setValue: setIsDarkMode } = useLocalStorage("isDarkMode", false);
-  const { storedValue: flowImage, setValue: setFlowImage } = useLocalStorage("flowImage");
+  const { flowInstance, setFlowInstance } = useFlowInstance();
+  const { storedValue: isDarkMode, setValue: setIsDarkMode } = useLocalStorage("isDarkMode", true);
+  const { storedValue: flowCanvas, setValue: setFlowCanvas } = useLocalStorage("flowCanvas");
 
-  const [flowInstance, setFlowInstance] = useState<OnLoadParams>();
+  console.log("isDarkMode", isDarkMode);
+  console.log("flowCanvas", flowCanvas);
+
+  // useEffect(() => {
+  //   if (flowInstance) {
+  //     flowInstance.fitView();
+
+  //     html2canvas(document.querySelector(".react-flow")!).then((canvas) => {
+  //       setFlowCanvas(canvas);
+  //     });
+  //   }
+  // }, [flowInstance, setFlowCanvas]);
 
   const handleLoad = (flowInstance: OnLoadParams) => {
     console.log("flow loaded:", flowInstance);
@@ -24,22 +39,17 @@ const Home: NextPage = () => {
   };
 
   const handleDownload = () => {
-    if (flowInstance) flowInstance.fitView();
+    const targetImgUri = flowCanvas.toDataURL("img/png");
+    const downloadLink = document.createElement("a");
 
-    html2canvas(document.querySelector(".react-flow")!).then((canvas) => {
-      const targetImgUri = canvas.toDataURL("img/png");
-      const downloadLink = document.createElement("a");
-
-      downloadLink.href = targetImgUri;
-      downloadLink.download = "flow-chart.png";
-      document.body.appendChild(downloadLink); // for firefox
-      downloadLink.click();
-      document.body.removeChild(downloadLink); // for firefox
-    });
+    downloadLink.href = targetImgUri;
+    downloadLink.download = "flow-chart.png";
+    document.body.appendChild(downloadLink); // for firefox
+    downloadLink.click();
+    document.body.removeChild(downloadLink); // for firefox
   };
 
   const handleClickSwitch = () => {
-    console.log("fired");
     setIsDarkMode(!isDarkMode);
   };
 
@@ -59,7 +69,7 @@ const Home: NextPage = () => {
 
         <header>
           <div className="flex relative justify-center items-center p-4 h-20">
-            <h1 className="m-0 text-4xl font-bold text-center">📈 Share Flow Chart</h1>
+            <h1 className="m-0 text-xl font-bold text-center lg:text-4xl">📈 Share Flow Chart</h1>
             <div className="absolute right-8">
               <ModeSwitch isDarkMode={isDarkMode} onToggle={handleClickSwitch} />
             </div>
@@ -68,7 +78,9 @@ const Home: NextPage = () => {
 
         <main className="grow">
           <div className="flex flex-col items-center pt-8">
-            <Flow isDarkMode={isDarkMode} onLoad={handleLoad} />
+            {size.width && (
+              <Flow isDarkMode={isDarkMode} onLoad={handleLoad} screenWidth={size.width} />
+            )}
 
             <div className="flex gap-10 items-start mt-10">
               <div>
