@@ -33,15 +33,20 @@ type Props = { isDarkMode: boolean; screenWidth: number } & Pick<
 
 export const Flow: VFC<Props> = ({ screenWidth, isDarkMode, onLoad }) => {
   const OGP_RATIO = 1.91;
-  const size = [
-    `h-[${screenWidth / OGP_RATIO}px]`,
-    `w-full`,
-    `lg:h-[500px]`,
-    `lg:w-[${500 * OGP_RATIO}px]`,
-  ].join(" ");
+  // TODO:
+  const size = [`h-[320px]`, `w-[95%]`, `h-[500px]`, `w-[955px]`];
+
+  let style;
+  if (screenWidth < 640) {
+    style = size.slice(0, 2).join(" ");
+  } else {
+    style = size.slice(2, 4).join(" ");
+  }
 
   return (
-    <div className={`${size} ${isDarkMode ? "bg-slate-600" : "bg-slate-200"} rounded-md shadow-lg`}>
+    <div
+      className={`${style} ${isDarkMode ? "bg-slate-600" : "bg-slate-200"} rounded-md shadow-lg`}
+    >
       <FlowOrigin elements={elements} onLoad={onLoad} />
     </div>
   );

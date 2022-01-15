@@ -57,7 +57,9 @@ const Home: NextPage = () => {
   return (
     <div className={isDarkMode ? "dark" : undefined}>
       <Head>
-        <title>Free Online Sharable Flowchart & Dialog Editor | @tachibanayu24</title>
+        <title>
+          Flowchart & Dialog Editor Online - create share link and export as image online
+        </title>
         <link
           rel="icon"
           href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text x=%2250%%22 y=%2250%%22 style=%22dominant-baseline:central;text-anchor:middle;font-size:90px;%22>📈</text></svg>"
@@ -68,13 +70,19 @@ const Home: NextPage = () => {
           type="text/css"
         />
 
-        <meta name="description" content="This is content" />
+        <meta
+          name="description"
+          content="Flowchart & Dialog Editor Online is a web-based tool to edit, generate image, share with link and OG image.
+"
+        />
       </Head>
 
       <div className="flex flex-col min-h-screen antialiased hover:subpixel-antialiased text-gray-800 dark:text-gray-200 bg-gray-100 dark:bg-gray-800">
-        <header>
-          <div className="flex relative justify-center items-center p-4 h-20">
-            <h1 className="m-0 text-xl font-bold text-center lg:text-4xl">📈 Flowchart Edit</h1>
+        <header className="w-full border-b-2 border-slate-300 dark:border-slate-600 border-dashed">
+          <div className="flex relative justify-start items-center p-4 h-20 lg:justify-center">
+            <h1 className="m-0 text-base font-bold lg:text-4xl">
+              📈 Flowchart & Dialog Editor Online
+            </h1>
             <div className="absolute right-8">
               <ModeSwitch isDarkMode={isDarkMode} onToggle={handleClickSwitch} />
             </div>
@@ -87,7 +95,7 @@ const Home: NextPage = () => {
               <Flow isDarkMode={isDarkMode} onLoad={handleLoad} screenWidth={size.width} />
             )}
 
-            <div className="flex gap-10 items-start mt-10">
+            <div className="flex gap-5 items-start mt-10">
               <div>
                 <button
                   className="py-1 px-3 font-bold bg-black/20 hover:bg-black/40 dark:bg-white/20 dark:hover:bg-white/40 rounded-md shadow-lg"
