@@ -32,17 +32,25 @@ type Props = { isDarkMode: boolean } & Pick<ComponentProps<typeof FlowOrigin>, "
 
 export const Flow: VFC<Props> = ({ isDarkMode, onLoad }) => {
   return (
-    <div style={getStyle(isDarkMode)}>
+    <div
+      // style={getStyle(isDarkMode)}
+      className={`h-[500px] w-[${500 * OGP_RATIO}px] ${
+        isDarkMode ? "bg-slate-600" : "bg-slate-200"
+      } rounded-md shadow-lg`}
+    >
       <FlowOrigin elements={elements} onLoad={onLoad} />
     </div>
   );
 };
 
-const getStyle = (isDarkMode: keyof Pick<Props, "isDarkMode">): CSSProperties => {
+const getStyle = (
+  isDarkMode: Pick<Props, "isDarkMode">[keyof Pick<Props, "isDarkMode">]
+): CSSProperties => {
   console.log(isDarkMode);
   return {
     height: 500,
     width: 500 * OGP_RATIO,
+    borderRadius: "8px",
     background: isDarkMode ? "darkslategray" : "lightslategray",
   };
 };

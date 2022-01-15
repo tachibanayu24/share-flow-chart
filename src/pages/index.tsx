@@ -73,7 +73,7 @@ const Home: NextPage = () => {
             <div className="flex gap-10 items-start mt-10">
               <div>
                 <button
-                  className="py-1 px-3 font-bold bg-black/20 hover:bg-black/40 dark:bg-white/20 dark:hover:bg-white/40 rounded-md shadow"
+                  className="py-1 px-3 font-bold bg-black/20 hover:bg-black/40 dark:bg-white/20 dark:hover:bg-white/40 rounded-md shadow-lg"
                   onClick={() => handleCopy(location.href)}
                 >
                   🔗 Copy & Share
@@ -84,7 +84,7 @@ const Home: NextPage = () => {
               </div>
 
               <button
-                className="py-1 px-3 font-bold bg-black/20 hover:bg-black/40 dark:bg-white/20 dark:hover:bg-white/40 rounded-md shadow"
+                className="py-1 px-3 font-bold bg-black/20 hover:bg-black/40 dark:bg-white/20 dark:hover:bg-white/40 rounded-md shadow-lg"
                 onClick={() => handleDownload()}
               >
                 📤 Fit view & Export
