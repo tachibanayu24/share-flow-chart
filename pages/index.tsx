@@ -6,11 +6,13 @@ const Home: NextPage = () => {
   return (
     <div>
       <Head>
-        <title>This is title</title>
+        <title>Share Flow Chart</title>
         <meta name="description" content="This is content" />
       </Head>
 
-      <main>Main</main>
+      <main>
+        <h1 className="text-red font-bold">Share Flow Chart</h1>
+      </main>
 
       <footer>Footer</footer>
     </div>
